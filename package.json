@@ -7,19 +7,7 @@
     "author": {
         "name": "Shivanagouda L",
         "email": "slinganagoudra@gmail.com"
-    },
-    "scopedRegistries": [
-        {
-            "name": "package.openupm.com",
-            "url": "https://package.openupm.com",
-            "scopes": [
-                "com.browar.editor-toolbox",
-                "com.dreamertheory.savingsystem"
-            ]
-        }
-    ],
-    "dependencies": {
-        "com.browar.editor-toolbox": "0.13.2"
-    },
+    },    
     "license": "MIT"
+  
 }
