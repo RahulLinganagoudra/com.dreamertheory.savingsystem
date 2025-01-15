@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "displayName": "Dreamer's Saving System",
     "description": "This is a easy package to save game data in json format.",
-    "unity": "2021.3.5",
+    "unity": "2021.3",
     "author": {
         "name": "Shivanagouda L",
         "email": "slinganagoudra@gmail.com"
