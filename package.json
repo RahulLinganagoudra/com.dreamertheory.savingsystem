@@ -2,7 +2,7 @@
     "name": "com.dreamertheory.savingsystem",
     "version": "1.0.0",
     "displayName": "Dreamer's Saving System",
-    "description": "This is a easy package to save game data in json format.",
+    "description": "This is an easy package to save game data in JSON format.",
     "unity": "2021.3",
     "author": {
         "name": "Shivanagouda L",
@@ -13,7 +13,8 @@
             "name": "package.openupm.com",
             "url": "https://package.openupm.com",
             "scopes": [
-                "com.browar.editor-toolbox"
+                "com.browar.editor-toolbox",
+                "com.dreamertheory.savingsystem"
             ]
         }
     ],
