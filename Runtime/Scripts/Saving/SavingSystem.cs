@@ -14,7 +14,7 @@ namespace SavingSystem.Core
 		{
 			public EntitySaver.DataFile[] entityData;
 		}
-
+		[SerializeField, Header("Saving System Adapter"), NotNull] ISaveSystem saveSystem;
 		[BeginGroup("AutoSave"), SerializeField, LeftToggle, Space]
 		private bool UseAutoSave = false;
 
@@ -24,7 +24,7 @@ namespace SavingSystem.Core
 		[EditorButton(nameof(Save))]
 		private int savingInterval = 120;
 		private float timeDelta;
-		private readonly string encryptionKey = "@BharatiyaDrishya#123!";
+		private readonly string encryptionKey = "@#123!";
 
 
 		public UnityEvent OnSave = new();
@@ -36,6 +36,7 @@ namespace SavingSystem.Core
 		private void Awake()
 		{
 			instance = this;
+			saveSystem = GetComponent<ISaveSystem>();
 #if UNITY_EDITOR
 			LoadFromEditor();
 #else
@@ -67,6 +68,7 @@ namespace SavingSystem.Core
 #else
             SaveToRuntime(state);
 #endif
+			OnSave?.Invoke();
 		}
 
 		/// <summary>
@@ -106,8 +108,9 @@ namespace SavingSystem.Core
 		{
 			string jsonData = JsonUtility.ToJson(data);
 			string cipherData = Convert.ToBase64String(Encoding.UTF8.GetBytes(jsonData));
-			File.WriteAllText(JsonPathRuntime, cipherData);
-
+			//this is suppose to be the local save
+			//File.WriteAllText(JsonPathRuntime, cipherData);
+			saveSystem.SaveData("savedata", cipherData, null);
 			PlayerPrefs.Save();
 		}
 
@@ -118,10 +121,12 @@ namespace SavingSystem.Core
 				Debug.LogWarning("No runtime save data found. Creating a new one.");
 				SaveToRuntime(CaptureState());
 			}
-			string obfuscatedData = File.ReadAllText(JsonPathRuntime);
-			string jsonData = Encoding.UTF8.GetString(Convert.FromBase64String(obfuscatedData));
-			var data = JsonUtility.FromJson<Data>(jsonData);
-			RestoreState(data);
+			saveSystem.LoadData(JsonPathRuntime, (obfuscatedData) =>
+			{
+				string jsonData = Encoding.UTF8.GetString(Convert.FromBase64String(obfuscatedData));
+				var data = JsonUtility.FromJson<Data>(jsonData);
+				RestoreState(data);
+			});
 		}
 
 		private Data CaptureState()
@@ -156,4 +161,12 @@ namespace SavingSystem.Core
 			}
 		}
 	}
+	public interface ISaveSystem
+	{
+		void SaveData(string key, string value, System.Action<bool> callback);
+		void LoadData(string key, System.Action<string> callback);
+	}
+
 }
+
+

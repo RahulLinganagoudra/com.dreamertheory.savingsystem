@@ -1,5 +1,4 @@
-﻿using GameLog;
-using UnityEngine;
+﻿using UnityEngine;
 namespace SavingSystem
 {
 	public class ExampleSaving : MonoBehaviour, ISaveable
@@ -11,9 +10,9 @@ namespace SavingSystem
 			public float num2;
 			public string name;
 		}
-		[SerializeField,Disable]
+		[SerializeField, Disable]
 		int num1 = 0;
-		[SerializeField,Disable,EditorButton(nameof(ChangeNumbers))]
+		[SerializeField, Disable, EditorButton(nameof(ChangeNumbers))]
 		float num2 = 2;
 
 		void ISaveable.Load(string data)
@@ -21,7 +20,9 @@ namespace SavingSystem
 			BigData save = data.GetData<BigData>();
 			num1 = save.num1;
 			num2 = save.num2;
-			LogManager.GetDefaultLogger().Log($"Got from save!\nnum 1 = {save.num1}\nnum 2 = {save.num2}");
+#if UNITY_EDITOR
+			Debug.Log($"Got from save!\nnum 1 = {save.num1}\nnum 2 = {save.num2}");
+#endif
 		}
 
 		string ISaveable.Save()
@@ -30,8 +31,8 @@ namespace SavingSystem
 		}
 		private void ChangeNumbers()
 		{
-			num1=Random.Range(0,100);
-			num2=Random.Range(0,100f);
+			num1 = Random.Range(0, 100);
+			num2 = Random.Range(0, 100f);
 		}
 	}
 
