@@ -3,7 +3,7 @@ using System.IO;
 using System.Text;
 using UnityEngine;
 using UnityEngine.Events;
-
+using Newtonsoft.Json;	
 namespace SavingSystem.Core
 {
 	public class SavingSystem : MonoBehaviour
@@ -87,7 +87,7 @@ namespace SavingSystem.Core
 
 		private void SaveToEditor(Data data)
 		{
-			string jsonData = JsonUtility.ToJson(data, true);
+			string jsonData = JsonConvert.SerializeObject(data,Formatting.Indented);
 			File.WriteAllText(JsonPathEditor, jsonData);
 		}
 
@@ -100,13 +100,14 @@ namespace SavingSystem.Core
 			}
 
 			string jsonData = File.ReadAllText(JsonPathEditor);
-			var data = JsonUtility.FromJson<Data>(jsonData);
+			var data = JsonConvert.DeserializeObject<Data>(jsonData);
 			RestoreState(data);
 		}
 
 		private void SaveToRuntime(Data data)
 		{
-			string jsonData = JsonUtility.ToJson(data);
+			string jsonData = JsonConvert.SerializeObject(data, Formatting.Indented);
+			;
 			string cipherData = Convert.ToBase64String(Encoding.UTF8.GetBytes(jsonData));
 			//this is suppose to be the local save
 			//File.WriteAllText(JsonPathRuntime, cipherData);
@@ -124,7 +125,7 @@ namespace SavingSystem.Core
 			saveSystem.LoadData(JsonPathRuntime, (obfuscatedData) =>
 			{
 				string jsonData = Encoding.UTF8.GetString(Convert.FromBase64String(obfuscatedData));
-				var data = JsonUtility.FromJson<Data>(jsonData);
+				var data = JsonConvert.DeserializeObject<Data>(jsonData);
 				RestoreState(data);
 			});
 		}

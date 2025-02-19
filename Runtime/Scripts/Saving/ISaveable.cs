@@ -1,4 +1,4 @@
-using UnityEngine;
+using Newtonsoft.Json;
 
 namespace SavingSystem
 {
@@ -12,11 +12,11 @@ namespace SavingSystem
 	{
 		public static T GetData<T>(this string json)
 		{
-			return JsonUtility.FromJson<T>(json);
+			return JsonConvert.DeserializeObject<T>(json);
 		}
 		public static string SetData(this object json)
 		{
-			return JsonUtility.ToJson(json);
+			return JsonConvert.SerializeObject(json);
 		}
 	}
 }
