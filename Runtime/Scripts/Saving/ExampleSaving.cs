@@ -10,9 +10,9 @@ namespace SavingSystem
 			public float num2;
 			public string name;
 		}
-		[SerializeField, Disable]
+		[SerializeField]
 		int num1 = 0;
-		[SerializeField, Disable, EditorButton(nameof(ChangeNumbers))]
+		[SerializeField]
 		float num2 = 2;
 
 		void ISaveable.Load(string data)
@@ -29,6 +29,7 @@ namespace SavingSystem
 		{
 			return new BigData() { num1 = num1, num2 = num2, name = "" }.SetData();
 		}
+  		[ContextMenu("Change Number")]
 		private void ChangeNumbers()
 		{
 			num1 = Random.Range(0, 100);

@@ -14,14 +14,13 @@ namespace SavingSystem.Core
 		{
 			public EntitySaver.DataFile[] entityData;
 		}
-		[SerializeField, Header("Saving System Adapter"), NotNull] ISaveSystem saveSystem;
-		[BeginGroup("AutoSave"), SerializeField, LeftToggle, Space]
+		[SerializeField, Header("Saving System Adapter")] ISaveSystem saveSystem;
+		[ SerializeField, Space]
 		private bool UseAutoSave = false;
 
-		[SerializeField, Tooltip("Saving interval in seconds"), EndGroup]
+		[SerializeField, Tooltip("Saving interval in seconds")]
 		[Space]
-		[EditorButton(nameof(Load))]
-		[EditorButton(nameof(Save))]
+	
 		private int savingInterval = 120;
 		private float timeDelta;
 		private readonly string encryptionKey = "@#123!";

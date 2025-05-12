@@ -10,7 +10,6 @@
   },
   "license": "MIT",
   "dependencies": {
-    "com.browar.editor-toolbox": "0.13.2",
     "com.unity.nuget.newtonsoft-json": "3.0.1"
   }
 }
