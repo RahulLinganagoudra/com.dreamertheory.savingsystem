@@ -12,7 +12,7 @@ namespace SavingSystem
 			public string[] data;
 		}
 
-		[field: SerializeField, Disable, EditorButton(nameof(GenerateID))] public string EntityID { get; private set; } = "";
+		[SerializeField] public string EntityID { get; private set; } = "";
 
 		ISaveable[] saveables;
 
@@ -20,7 +20,7 @@ namespace SavingSystem
 		{
 			saveables ??= GetComponents<ISaveable>();
 		}
-
+		[ContextMenu("Generate ID")]
 		private void GenerateID() => EntityID = Guid.NewGuid().ToString();
 		internal DataFile Save()
 		{
