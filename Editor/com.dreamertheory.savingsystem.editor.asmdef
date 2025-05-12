@@ -1,0 +1,16 @@
+{
+    "name": "com.dreamertheory.savingsystem.editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:be4b9a0763c5e434cabbc4c0cd207f87"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

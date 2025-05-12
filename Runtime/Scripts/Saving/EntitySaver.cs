@@ -12,8 +12,8 @@ namespace SavingSystem
 			public string[] data;
 		}
 
-		[SerializeField] public string EntityID { get; private set; } = "";
-
+		[field:SerializeField] public string EntityID { get; private set; } = "";
+		 
 		ISaveable[] saveables;
 
 		private void Awake()
