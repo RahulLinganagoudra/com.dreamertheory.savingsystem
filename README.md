@@ -5,7 +5,7 @@ A lightweight save/load system for Unity that allows objects to register as save
 
 [![Unity](https://img.shields.io/badge/Unity-2020%2B-white?logo=unity&labelColor=black)](https://unity.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub stars](https://img.shields.io/github/stars/com.dreamertheory.savingsystem?style=social)](https://github.com/RahulLinganagoudra/com.dreamertheory.savingsystem)
+[![GitHub Repo stars](https://img.shields.io/github/stars/RahulLinganagoudra/com.dreamertheory.savingsystem)](https://github.com/RahulLinganagoudra/com.dreamertheory.savingsystem))
 [![Made With ❤️](https://img.shields.io/badge/made%20with-%E2%9D%A4-red)](https://github.com/RahulLinganagoudra)
 
 
