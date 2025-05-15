@@ -64,29 +64,29 @@ Each component manages its own data, while EntitySaver coordinates saving/loadin
 ``` cs :
 public class PlayerStats : MonoBehaviour, ISaveable
 {
-      [System.Serializable]
-		struct BigData
-		{
-			public int num1;
-			public float num2;
-			public string name;
-		}
-		[SerializeField]
-		int num1 = 0;
-		[SerializeField]
-		float num2 = 2;
-
-		void ISaveable.Load(string data)
-		{
-			BigData save = data.GetData<BigData>();
-			num1 = save.num1;
-			num2 = save.num2;
-		}
-
-		string ISaveable.Save()
-		{
-			return new BigData() { num1 = num1, num2 = num2, name = "" }.SetData();
-		}
+        [System.Serializable]
+	struct BigData
+	{
+		public int num1;
+		public float num2;
+		public string name;
+	}
+	[SerializeField]
+	int num1 = 0;
+	[SerializeField]
+	float num2 = 2;
+	
+	void ISaveable.Load(string data)
+	{
+		BigData save = data.GetData<BigData>();
+		num1 = save.num1;
+		num2 = save.num2;
+	}
+	
+	string ISaveable.Save()
+	{
+		return new BigData() { num1 = num1, num2 = num2, name = "" }.SetData();
+	}
 }
 ```
 `SetData()` and `GetData()` are the functions provided in the package that will convert the string to whatever the datatype you want
