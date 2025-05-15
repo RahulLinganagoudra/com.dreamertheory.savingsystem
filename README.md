@@ -64,32 +64,39 @@ Each component manages its own data, while EntitySaver coordinates saving/loadin
 ``` cs :
 public class PlayerStats : MonoBehaviour, ISaveable
 {
-    public int health = 100;
+      [System.Serializable]
+		struct BigData
+		{
+			public int num1;
+			public float num2;
+			public string name;
+		}
+		[SerializeField]
+		int num1 = 0;
+		[SerializeField]
+		float num2 = 2;
 
-    public string Save()
-    {
-        return JsonUtility.ToJson(this);
-    }
+		void ISaveable.Load(string data)
+		{
+			BigData save = data.GetData<BigData>();
+			num1 = save.num1;
+			num2 = save.num2;
+		}
 
-    public void Load(string data)
-    {
-        JsonUtility.FromJsonOverwrite(data, this);
-    }
+		string ISaveable.Save()
+		{
+			return new BigData() { num1 = num1, num2 = num2, name = "" }.SetData();
+		}
 }
 ```
+`SetData()` and `GetData()` are the functions provided in the package that will convert the string to whatever the datatype you want
 Attach EntitySaver and PlayerStats to the same GameObject.
+
 ### Saving and Loading
 Use the Save() and Load() methods of EntitySaver to serialize or deserialize:
 ``` cs :
-EntitySaver saver = GetComponent<EntitySaver>();
-
-// Saving
-var data = saver.Save();
-// Store 'data' somewhere (file, PlayerPrefs, etc.)
-
-// Loading
-saver.Load(data);
-
+SavingSystem.Instance.Save();
+SavingSystem.Instance.Load();
 ```
 ### Editor Integration
 The editor script adds a "Generate ID" button in the Inspector for the EntitySaver component.
