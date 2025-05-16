@@ -34,18 +34,83 @@ https://github.com/RahulLinganagoudra/com.dreamertheory.savingsystem.git
 ```
 ---
 
-## 🚀 Usage
+### Usage
+This saving system uses an adapter pattern to allow switching between local, cloud, or other saving strategies easily.
+``` text :
+     ┌────────────────────┐
+     │    GameObject      │
+     │  (with components) │
+     └────────┬───────────┘
+              │
+              ▼
+     ┌────────────────────┐
+     │   EntitySaver.cs   │ ◄────── Generates and holds unique EntityID
+     └────────┬───────────┘
+              │
+              ▼
+     ┌────────────────────┐
+     │   ISaveable[]      │ ◄────── All attached ISaveable components
+     └────────┬───────────┘
+              │
+              ▼
+     ┌────────────────────────────┐
+     │     Save / Load Request    │
+     └────────┬──────────┬────────┘
+              │          │
+      ┌───────▼───┐  ┌───▼────────┐
+      │ LocalSave │  │ CloudSave  │   ◄──── Pluggable Adapters (via ISaveSystem)
+      │  System   │  │  System    │
+      └───────────┘  └────────────┘
+              │
+              ▼
+     ┌────────────────────────────┐
+     │  FileSystem / Server API   │
+     └────────────────────────────┘
 
-1. Add the `EntitySaver` component to any GameObject.
-2. Ensure your component implements the `ISaveable` interface:
-``` cs : 
-   public interface ISaveable
-   {
-       string Save();
-       void Load(string data);
-   }
 ```
-3. Each ISaveable component on the GameObject will be included in save/load operations.
+1. Implement the ISaveable Interface 
+	Each component that needs to be saved must implement:
+	
+	``` cs :
+	public interface ISaveable
+	{
+	    string Save();
+	    void Load(string data);
+	}
+	```
+	Add this to any script whose state you want saved.
+2. Add the EntitySaver Component
+	Attach the EntitySaver component to any GameObject. It will automatically:
+	- Assign a unique EntityID.
+	
+	- Find and cache all ISaveable components.
+	
+	- Delegate save/load operations to each of them.
+
+3. Saving & Loading with a Save System Adapter
+	Instead of directly saving data, your logic should go through an ISaveSystem:
+	``` cs :
+	public interface ISaveSystem
+	{
+	    void SaveData(string key, string value, Action<bool> callback);
+	    void LoadData(string key, Action<string> callback);
+	}
+	```
+	You can Use Local saving system included in the package
+	``` cs :
+ 	public class LocalSaveSystem : MonoBehaviour, ISaveSystem
+	{
+	    // Saves to Application.persistentDataPath/key.json
+	    public void SaveData(string key, string value, Action<bool> callback) { /* ... */ }
+	
+	    // Loads from key.json if exists
+	    public void LoadData(string key, Action<string> callback) { /* ... */ }
+	}
+	```
+ 	which saves data locally at:
+	``` shell :
+	%APPDATA%/../LocalLow/<Company>/<Project>/key.json
+	```
 
 ### Prefab Setup Example
 You can use EntitySaver on any prefab that needs to be saved/loaded. Here's a common use-case:
