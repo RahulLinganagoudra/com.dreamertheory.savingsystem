@@ -166,7 +166,10 @@ SavingSystem.Instance.Load();
 ### Editor Integration
 The editor script adds a "Generate ID" button in the Inspector for the EntitySaver component.
 - Use this button to assign a unique ID to the GameObject.
-  ![Inspector Screenshot](https://your-image-url.com/editor-button.png)
+  
+  ![](https://github.com/RahulLinganagoudra/MediaResources/blob/main/Screenshot%202025-05-15%20174244.png)
+  ![](https://github.com/RahulLinganagoudra/MediaResources/blob/main/Screenshot%202025-05-15%20174250.png)
+  
 - Required if you want to reference this object persistently across sessions.
 ### Notes
 The EntityID is serialized and can be generated via the button or programmatically.
