@@ -8,6 +8,7 @@
     "name": "Shivanagouda L",
     "email": "slinganagoudra@gmail.com"
   },
+  "documentationUrl": "https://github.com/RahulLinganagoudra/com.dreamertheory.savingsystem#readme",
   "license": "MIT",
   "dependencies": {
     "com.unity.nuget.newtonsoft-json": "3.0.1"
