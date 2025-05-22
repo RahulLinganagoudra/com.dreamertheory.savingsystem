@@ -12,21 +12,39 @@ namespace SavingSystem.Core
 		{
 			try
 			{
-				File.WriteAllText(GetFilePath(key), value);
+				string path = GetFilePath(key);
+				string directory = Path.GetDirectoryName(path);
+				if (!Directory.Exists(directory))
+				{
+					Directory.CreateDirectory(directory);
+				}
+		
+				File.WriteAllText(path, value);
 				callback?.Invoke(true);
 			}
 			catch (Exception e)
 			{
+#if UNITY_EDITOR
 				Debug.LogError("Local Save Error: " + e.Message);
-				callback?.Invoke(false);
+#endif		
+		  		callback?.Invoke(false);
 			}
 		}
+
 
 		public void LoadData(string key, Action<string> callback)
 		{
 			try
 			{
+   
 				string filePath = GetFilePath(key);
+    
+				if (!Directory.Exists(Path.GetDirectoryName(filePath)))
+				{
+					callback?.Invoke(null);
+					return;
+				}
+
 				if (File.Exists(filePath))
 				{
 					string data = File.ReadAllText(filePath);
@@ -39,7 +57,9 @@ namespace SavingSystem.Core
 			}
 			catch (Exception e)
 			{
+#if UNITY_EDITOR
 				Debug.LogError("Local Load Error: " + e.Message);
+#endif		
 				callback?.Invoke(null);
 			}
 		}
